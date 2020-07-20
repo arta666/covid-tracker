@@ -16,6 +16,8 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
 
+        presenter = createPresenter();
+
     }
 
     public abstract View getContentView();

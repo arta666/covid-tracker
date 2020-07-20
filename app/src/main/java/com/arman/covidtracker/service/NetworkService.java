@@ -2,6 +2,7 @@ package com.arman.covidtracker.service;
 
 
 import com.arman.covidtracker.app.Endpoints;
+import com.arman.covidtracker.model.CountryConverters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

@@ -22,23 +22,23 @@ public class Country implements Parcelable {
 
     @Expose
     @SerializedName("NewConfirmed")
-    private int newConfirmed;
+    private long newConfirmed;
 
     @Expose
-    @SerializedName("NewConfirmed")
+    @SerializedName("TotalConfirmed")
     private long totalConfirmed;
 
     @Expose
     @SerializedName("NewDeaths")
-    private int newDeaths;
+    private long newDeaths;
 
     @Expose
     @SerializedName("TotalDeaths")
-    private int totalDeaths;
+    private long totalDeaths;
 
     @Expose
     @SerializedName("NewRecovered")
-    private int newRecovered;
+    private long newRecovered;
 
     @Expose
     @SerializedName("TotalRecovered")
@@ -97,7 +97,7 @@ public class Country implements Parcelable {
         this.slug = slug;
     }
 
-    public int getNewConfirmed() {
+    public long getNewConfirmed() {
         return newConfirmed;
     }
 
@@ -113,7 +113,7 @@ public class Country implements Parcelable {
         this.totalConfirmed = totalConfirmed;
     }
 
-    public int getNewDeaths() {
+    public long getNewDeaths() {
         return newDeaths;
     }
 
@@ -121,7 +121,7 @@ public class Country implements Parcelable {
         this.newDeaths = newDeaths;
     }
 
-    public int getTotalDeaths() {
+    public long getTotalDeaths() {
         return totalDeaths;
     }
 
@@ -129,7 +129,7 @@ public class Country implements Parcelable {
         this.totalDeaths = totalDeaths;
     }
 
-    public int getNewRecovered() {
+    public long getNewRecovered() {
         return newRecovered;
     }
 
@@ -163,11 +163,11 @@ public class Country implements Parcelable {
         dest.writeString(country);
         dest.writeString(countryCode);
         dest.writeString(slug);
-        dest.writeInt(newConfirmed);
+        dest.writeLong(newConfirmed);
         dest.writeLong(totalConfirmed);
-        dest.writeInt(newDeaths);
-        dest.writeInt(totalDeaths);
-        dest.writeInt(newRecovered);
+        dest.writeLong(newDeaths);
+        dest.writeLong(totalDeaths);
+        dest.writeLong(newRecovered);
         dest.writeLong(totalRecovered);
         dest.writeString(date);
     }

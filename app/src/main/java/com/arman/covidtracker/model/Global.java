@@ -3,22 +3,43 @@ package com.arman.covidtracker.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class Global implements Parcelable {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    private long NewConfirmed ;
-    private long TotalConfirmed;
-    private long NewDeaths;
-    private long TotalDeaths;
-    private long NewRecovered;
-    private long TotalRecovered;
+
+public class Global implements Parcelable {
+
+    @Expose
+    @SerializedName("NewConfirmed")
+    private long newConfirmed;
+
+    @Expose
+    @SerializedName("TotalConfirmed")
+    private long totalConfirmed;
+
+    @Expose
+    @SerializedName("NewDeaths")
+    private long newDeaths;
+
+    @Expose
+    @SerializedName("TotalDeaths")
+    private long totalDeaths;
+
+    @Expose
+    @SerializedName("NewRecovered")
+    private long newRecovered;
+
+    @Expose
+    @SerializedName("TotalRecovered")
+    private long totalRecovered;
 
     protected Global(Parcel in) {
-        NewConfirmed = in.readLong();
-        TotalConfirmed = in.readLong();
-        NewDeaths = in.readLong();
-        TotalDeaths = in.readLong();
-        NewRecovered = in.readLong();
-        TotalRecovered = in.readLong();
+        newConfirmed = in.readLong();
+        totalConfirmed = in.readLong();
+        newDeaths = in.readLong();
+        totalDeaths = in.readLong();
+        newRecovered = in.readLong();
+        totalRecovered = in.readLong();
     }
 
     public static final Creator<Global> CREATOR = new Creator<Global>() {
@@ -34,51 +55,51 @@ class Global implements Parcelable {
     };
 
     public long getNewConfirmed() {
-        return NewConfirmed;
+        return newConfirmed;
     }
 
     public void setNewConfirmed(long newConfirmed) {
-        NewConfirmed = newConfirmed;
+        this.newConfirmed = newConfirmed;
     }
 
     public long getTotalConfirmed() {
-        return TotalConfirmed;
+        return totalConfirmed;
     }
 
     public void setTotalConfirmed(long totalConfirmed) {
-        TotalConfirmed = totalConfirmed;
+        this.totalConfirmed = totalConfirmed;
     }
 
     public long getNewDeaths() {
-        return NewDeaths;
+        return newDeaths;
     }
 
     public void setNewDeaths(long newDeaths) {
-        NewDeaths = newDeaths;
+        this.newDeaths = newDeaths;
     }
 
     public long getTotalDeaths() {
-        return TotalDeaths;
+        return totalDeaths;
     }
 
     public void setTotalDeaths(long totalDeaths) {
-        TotalDeaths = totalDeaths;
+        this.totalDeaths = totalDeaths;
     }
 
     public long getNewRecovered() {
-        return NewRecovered;
+        return newRecovered;
     }
 
     public void setNewRecovered(long newRecovered) {
-        NewRecovered = newRecovered;
+        this.newRecovered = newRecovered;
     }
 
     public long getTotalRecovered() {
-        return TotalRecovered;
+        return totalRecovered;
     }
 
     public void setTotalRecovered(long totalRecovered) {
-        TotalRecovered = totalRecovered;
+        this.totalRecovered = totalRecovered;
     }
 
     @Override
@@ -88,11 +109,11 @@ class Global implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(NewConfirmed);
-        dest.writeLong(TotalConfirmed);
-        dest.writeLong(NewDeaths);
-        dest.writeLong(TotalDeaths);
-        dest.writeLong(NewRecovered);
-        dest.writeLong(TotalRecovered);
+        dest.writeLong(newConfirmed);
+        dest.writeLong(totalConfirmed);
+        dest.writeLong(newDeaths);
+        dest.writeLong(totalDeaths);
+        dest.writeLong(newRecovered);
+        dest.writeLong(totalRecovered);
     }
 }

@@ -3,29 +3,62 @@ package com.arman.covidtracker.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class Country implements Parcelable {
-    private String Country;
-    private String CountryCode;
-    private String Slug;
-    private int NewConfirmed;
-    private long TotalConfirmed;
-    private int NewDeaths;
-    private int TotalDeaths;
-    private int NewRecovered;
-    private long TotalRecovered;
-    private String Date;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class Country implements Parcelable {
+
+    @Expose
+    @SerializedName("Country")
+    private String country;
+
+    @Expose
+    @SerializedName("CountryCode")
+    private String countryCode;
+
+    @Expose
+    @SerializedName("Slug")
+    private String slug;
+
+    @Expose
+    @SerializedName("NewConfirmed")
+    private int newConfirmed;
+
+    @Expose
+    @SerializedName("NewConfirmed")
+    private long totalConfirmed;
+
+    @Expose
+    @SerializedName("NewDeaths")
+    private int newDeaths;
+
+    @Expose
+    @SerializedName("TotalDeaths")
+    private int totalDeaths;
+
+    @Expose
+    @SerializedName("NewRecovered")
+    private int newRecovered;
+
+    @Expose
+    @SerializedName("TotalRecovered")
+    private long totalRecovered;
+
+    @Expose
+    @SerializedName("Date")
+    private String date;
 
     protected Country(Parcel in) {
-        Country = in.readString();
-        CountryCode = in.readString();
-        Slug = in.readString();
-        NewConfirmed = in.readInt();
-        TotalConfirmed = in.readLong();
-        NewDeaths = in.readInt();
-        TotalDeaths = in.readInt();
-        NewRecovered = in.readInt();
-        TotalRecovered = in.readLong();
-        Date = in.readString();
+        country = in.readString();
+        countryCode = in.readString();
+        slug = in.readString();
+        newConfirmed = in.readInt();
+        totalConfirmed = in.readLong();
+        newDeaths = in.readInt();
+        totalDeaths = in.readInt();
+        newRecovered = in.readInt();
+        totalRecovered = in.readLong();
+        date = in.readString();
     }
 
     public static final Creator<Country> CREATOR = new Creator<Country>() {
@@ -41,83 +74,83 @@ class Country implements Parcelable {
     };
 
     public String getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(String country) {
-        Country = country;
+        this.country = country;
     }
 
     public String getCountryCode() {
-        return CountryCode;
+        return countryCode;
     }
 
     public void setCountryCode(String countryCode) {
-        CountryCode = countryCode;
+        this.countryCode = countryCode;
     }
 
     public String getSlug() {
-        return Slug;
+        return slug;
     }
 
     public void setSlug(String slug) {
-        Slug = slug;
+        this.slug = slug;
     }
 
     public int getNewConfirmed() {
-        return NewConfirmed;
+        return newConfirmed;
     }
 
     public void setNewConfirmed(int newConfirmed) {
-        NewConfirmed = newConfirmed;
+        this.newConfirmed = newConfirmed;
     }
 
     public long getTotalConfirmed() {
-        return TotalConfirmed;
+        return totalConfirmed;
     }
 
     public void setTotalConfirmed(long totalConfirmed) {
-        TotalConfirmed = totalConfirmed;
+        this.totalConfirmed = totalConfirmed;
     }
 
     public int getNewDeaths() {
-        return NewDeaths;
+        return newDeaths;
     }
 
     public void setNewDeaths(int newDeaths) {
-        NewDeaths = newDeaths;
+        this.newDeaths = newDeaths;
     }
 
     public int getTotalDeaths() {
-        return TotalDeaths;
+        return totalDeaths;
     }
 
     public void setTotalDeaths(int totalDeaths) {
-        TotalDeaths = totalDeaths;
+        this.totalDeaths = totalDeaths;
     }
 
     public int getNewRecovered() {
-        return NewRecovered;
+        return newRecovered;
     }
 
     public void setNewRecovered(int newRecovered) {
-        NewRecovered = newRecovered;
+        this.newRecovered = newRecovered;
     }
 
     public long getTotalRecovered() {
-        return TotalRecovered;
+        return totalRecovered;
     }
 
     public void setTotalRecovered(long totalRecovered) {
-        TotalRecovered = totalRecovered;
+        this.totalRecovered = totalRecovered;
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
     }
 
     @Override
@@ -127,15 +160,15 @@ class Country implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(Country);
-        dest.writeString(CountryCode);
-        dest.writeString(Slug);
-        dest.writeInt(NewConfirmed);
-        dest.writeLong(TotalConfirmed);
-        dest.writeInt(NewDeaths);
-        dest.writeInt(TotalDeaths);
-        dest.writeInt(NewRecovered);
-        dest.writeLong(TotalRecovered);
-        dest.writeString(Date);
+        dest.writeString(country);
+        dest.writeString(countryCode);
+        dest.writeString(slug);
+        dest.writeInt(newConfirmed);
+        dest.writeLong(totalConfirmed);
+        dest.writeInt(newDeaths);
+        dest.writeInt(totalDeaths);
+        dest.writeInt(newRecovered);
+        dest.writeLong(totalRecovered);
+        dest.writeString(date);
     }
 }

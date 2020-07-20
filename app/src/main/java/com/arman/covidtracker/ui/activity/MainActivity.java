@@ -10,6 +10,9 @@ import android.view.View;
 import com.arman.covidtracker.R;
 import com.arman.covidtracker.contract.MainContract;
 import com.arman.covidtracker.databinding.ActivityMainBinding;
+import com.arman.covidtracker.di.component.ActivityComponent;
+import com.arman.covidtracker.di.component.FragmentComponent;
+import com.arman.covidtracker.di.module.FragmentModule;
 import com.arman.covidtracker.model.Summary;
 import com.arman.covidtracker.presenter.MainPresenter;
 import com.arman.covidtracker.repository.MainRepository;
@@ -17,18 +20,23 @@ import com.arman.covidtracker.service.ApiService;
 import com.arman.covidtracker.service.NetworkService;
 import com.arman.covidtracker.ui.base.BaseActivity;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
-    
+
     private static final String TAG = MainActivity.class.getSimpleName();
 
     ActivityMainBinding mBinding;
 
+    @Inject
+    MainRepository repository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         presenter.fetchSummaryData();
 
     }
@@ -42,8 +50,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @NonNull
     @Override
     protected MainPresenter createPresenter() {
-        ApiService service = NetworkService.buildService(ApiService.class);
-        return new MainPresenter(this,new MainRepository(service), AndroidSchedulers.mainThread());
+        return new MainPresenter(this, repository, AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public FragmentComponent initComponent(ActivityComponent activityComponent) {
+        activityComponent.inject(this);
+        return activityComponent.plus(new FragmentModule());
     }
 
     @Override

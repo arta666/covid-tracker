@@ -17,6 +17,11 @@ allprojects {
         google()
         jcenter()
     }
+
+    ext {
+        dagger_version = "2.24"
+
+    }
 }
 
 task clean(type: Delete) {

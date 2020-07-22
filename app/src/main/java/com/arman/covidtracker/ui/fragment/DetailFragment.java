@@ -57,5 +57,5 @@ public class DetailFragment extends Fragment {
 
         return mBinding.getRoot();
     }
-    
+
 }

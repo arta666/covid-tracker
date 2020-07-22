@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +66,9 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
     @Inject
     MainRepository repository;
 
+
+    MutableLiveData<Global> mutableLiveData;
+
     public MainFragment() {
         // Required empty public constructor
     }
@@ -106,8 +111,16 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentMainBinding.inflate(inflater, container, false);
-        setUpChart();
+        if (savedInstanceState == null) {
+            setUpChart();
+
+        }
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     private void setUpChart() {
@@ -115,7 +128,7 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
         mBinding.chartPie.setHoleRadius(45f);
         mBinding.chartPie.setTransparentCircleRadius(50f);
         mBinding.chartPie.animateY(140, Easing.EaseInOutQuad);
-        mBinding.chartPie.animateXY(2000,2000);
+        mBinding.chartPie.animateXY(2000, 2000);
 
         mBinding.chartPie.getDescription().setEnabled(false);
 
@@ -131,33 +144,33 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
 
     }
 
-    private void setUpHorizontalChart(Global global){
-       BarData barData = new BarData(getData(global));
-       barData.setValueTextSize(14f);
-       mBinding.chartLine.setData(barData);
-       Description description = new Description();
-       description.setText("");
-       mBinding.chartLine.setDescription(description);
-       mBinding.chartLine.animateXY(2000,2000);
-       mBinding.chartLine.invalidate();
+    private void setUpHorizontalChart(Global global) {
+        BarData barData = new BarData(getData(global));
+        barData.setValueTextSize(14f);
+        mBinding.chartLine.setData(barData);
+        Description description = new Description();
+        description.setText("");
+        mBinding.chartLine.setDescription(description);
+        mBinding.chartLine.animateXY(2000, 2000);
+        mBinding.chartLine.invalidate();
     }
 
 
-    private ArrayList<IBarDataSet> getData(Global global){
+    private ArrayList<IBarDataSet> getData(Global global) {
 
         ArrayList<BarEntry> confirmedSet = new ArrayList<>();
-        BarEntry confirmedEntry = new BarEntry(1f,(float) global.getNewConfirmed());
+        BarEntry confirmedEntry = new BarEntry(1f, (float) global.getNewConfirmed());
         confirmedSet.add(confirmedEntry);
 
         ArrayList<BarEntry> deathSet = new ArrayList<>();
-        BarEntry deathEntry = new BarEntry(2f,(float) global.getNewDeaths());
+        BarEntry deathEntry = new BarEntry(2f, (float) global.getNewDeaths());
         deathSet.add(deathEntry);
 
 
-        BarDataSet confirmedDataSet = new BarDataSet(confirmedSet,"New Confirmed");
+        BarDataSet confirmedDataSet = new BarDataSet(confirmedSet, "New Confirmed");
         confirmedDataSet.setColor(ContextCompat.getColor(getContext(), R.color.chart_yellow));
 
-        BarDataSet deathsDataSet = new BarDataSet(deathSet,"New Deaths");
+        BarDataSet deathsDataSet = new BarDataSet(deathSet, "New Deaths");
         deathsDataSet.setColor(ContextCompat.getColor(getContext(), R.color.chart_red));
 
         ArrayList<IBarDataSet> barDataSets = new ArrayList<>();
@@ -168,13 +181,12 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
         return barDataSets;
 
 
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.fetchGlobal();
+            presenter.fetchGlobal();
     }
 
     @Override
@@ -207,12 +219,12 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
         PieDataSet dataSet = new PieDataSet(entries, "Word Covid-19");
         dataSet.setDrawIcons(false);
         dataSet.setSliceSpace(3f);
-        dataSet.setIconsOffset(new MPPointF(0,40));
+        dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
 
-        int[]colors = {R.color.chart_green,R.color.chart_yellow,R.color.chart_red};
+        int[] colors = {R.color.chart_green, R.color.chart_yellow, R.color.chart_red};
 
-        dataSet.setColors(colors,getContext());
+        dataSet.setColors(colors, getContext());
 
 
         PieData data = new PieData(dataSet);
@@ -224,8 +236,21 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
 
     @Override
     public void onDisplayGlobal(Global global) {
-        createPieChartOfTotal(global);
-        setUpHorizontalChart(global);
+        if (mutableLiveData == null){
+            mutableLiveData = new MutableLiveData<>();
+            mutableLiveData.setValue(global);
+        }
+        setupViewModel();
+    }
+
+    private void setupViewModel() {
+        mutableLiveData.observe(this, new Observer<Global>() {
+            @Override
+            public void onChanged(Global global) {
+                createPieChartOfTotal(global);
+                setUpHorizontalChart(global);
+            }
+        });
     }
 
     @Override

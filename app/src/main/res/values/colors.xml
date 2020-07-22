@@ -9,5 +9,7 @@
     <color name="chart_red">#E54B3B</color>
     <color name="color_grey_light">#dddddd</color>
 
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
 
 </resources>

@@ -8,24 +8,30 @@ import com.google.gson.annotations.SerializedName;
 
 public class Country implements Parcelable {
 
+
     @Expose
-    @SerializedName("Country")
+    @SerializedName("countryName")
     private String country;
 
     @Expose
-    @SerializedName("CountryCode")
+    @SerializedName("countryCode")
     private String countryCode;
 
     @Expose
-    @SerializedName("Slug")
-    private String slug;
+    @SerializedName("lat")
+    private double lat;
+
+    @Expose
+    @SerializedName("lng")
+    private double lng;
+
 
     @Expose
     @SerializedName("NewConfirmed")
     private long newConfirmed;
 
     @Expose
-    @SerializedName("TotalConfirmed")
+    @SerializedName("confirmed")
     private long totalConfirmed;
 
     @Expose
@@ -33,7 +39,7 @@ public class Country implements Parcelable {
     private long newDeaths;
 
     @Expose
-    @SerializedName("TotalDeaths")
+    @SerializedName("deaths")
     private long totalDeaths;
 
     @Expose
@@ -41,22 +47,72 @@ public class Country implements Parcelable {
     private long newRecovered;
 
     @Expose
-    @SerializedName("TotalRecovered")
+    @SerializedName("recovered")
     private long totalRecovered;
 
     @Expose
     @SerializedName("Date")
     private String date;
 
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public long getNewConfirmed() {
+        return newConfirmed;
+    }
+
+    public long getTotalConfirmed() {
+        return totalConfirmed;
+    }
+
+    public long getNewDeaths() {
+        return newDeaths;
+    }
+
+    public long getTotalDeaths() {
+        return totalDeaths;
+    }
+
+    public long getNewRecovered() {
+        return newRecovered;
+    }
+
+    public long getTotalRecovered() {
+        return totalRecovered;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public static Creator<Country> getCREATOR() {
+        return CREATOR;
+    }
+
     protected Country(Parcel in) {
         country = in.readString();
         countryCode = in.readString();
-        slug = in.readString();
-        newConfirmed = in.readInt();
+        lat = in.readDouble();
+        lng = in.readDouble();
+        newConfirmed = in.readLong();
         totalConfirmed = in.readLong();
-        newDeaths = in.readInt();
-        totalDeaths = in.readInt();
-        newRecovered = in.readInt();
+        newDeaths = in.readLong();
+        totalDeaths = in.readLong();
+        newRecovered = in.readLong();
         totalRecovered = in.readLong();
         date = in.readString();
     }
@@ -73,84 +129,24 @@ public class Country implements Parcelable {
         }
     };
 
-    public String getCountry() {
-        return country;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Country)) {
+            return false;
+        }
+
+        return country.equalsIgnoreCase(((Country) obj).getCountry());
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public long getNewConfirmed() {
-        return newConfirmed;
-    }
-
-    public void setNewConfirmed(int newConfirmed) {
-        this.newConfirmed = newConfirmed;
-    }
-
-    public long getTotalConfirmed() {
-        return totalConfirmed;
-    }
-
-    public void setTotalConfirmed(long totalConfirmed) {
-        this.totalConfirmed = totalConfirmed;
-    }
-
-    public long getNewDeaths() {
-        return newDeaths;
-    }
-
-    public void setNewDeaths(int newDeaths) {
-        this.newDeaths = newDeaths;
-    }
-
-    public long getTotalDeaths() {
-        return totalDeaths;
-    }
-
-    public void setTotalDeaths(int totalDeaths) {
-        this.totalDeaths = totalDeaths;
-    }
-
-    public long getNewRecovered() {
-        return newRecovered;
-    }
-
-    public void setNewRecovered(int newRecovered) {
-        this.newRecovered = newRecovered;
-    }
-
-    public long getTotalRecovered() {
-        return totalRecovered;
-    }
-
-    public void setTotalRecovered(long totalRecovered) {
-        this.totalRecovered = totalRecovered;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.country != null ? this.country.hashCode() : 0);
+        return hash;
     }
 
     @Override
@@ -162,7 +158,8 @@ public class Country implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(country);
         dest.writeString(countryCode);
-        dest.writeString(slug);
+        dest.writeDouble(lat);
+        dest.writeDouble(lng);
         dest.writeLong(newConfirmed);
         dest.writeLong(totalConfirmed);
         dest.writeLong(newDeaths);

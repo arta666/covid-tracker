@@ -35,9 +35,8 @@ public abstract class BaseFragment <Presenter extends BasePresenter> extends Fra
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(createLayout(), container, false);
-        return view;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -57,10 +56,6 @@ public abstract class BaseFragment <Presenter extends BasePresenter> extends Fra
         super.onAttach(context);
 
     }
-
-    @LayoutRes
-    protected abstract int createLayout();
-
 
 
     @SuppressWarnings("unchecked")

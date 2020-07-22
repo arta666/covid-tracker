@@ -5,6 +5,7 @@ import com.arman.covidtracker.di.module.ActivityModule;
 import com.arman.covidtracker.di.module.FragmentModule;
 import com.arman.covidtracker.di.scope.PerActivity;
 import com.arman.covidtracker.repository.MainRepository;
+import com.arman.covidtracker.repository.SearchRepository;
 import com.arman.covidtracker.ui.activity.MainActivity;
 import com.arman.covidtracker.ui.base.BaseActivity;
 
@@ -21,6 +22,8 @@ public interface ActivityComponent {
     void inject(MainActivity mainActivity);
 
     MainRepository getMainRepo();
+
+    SearchRepository getSearchRepo();
 
     FragmentComponent plus(FragmentModule fragmentModule);
 

@@ -10,19 +10,19 @@ import com.google.gson.annotations.SerializedName;
 public class Global implements Parcelable {
 
     @Expose
-    @SerializedName("NewConfirmed")
+    @SerializedName("totalNewCases")
     private long newConfirmed;
 
     @Expose
-    @SerializedName("TotalConfirmed")
+    @SerializedName("totalConfirmed")
     private long totalConfirmed;
 
     @Expose
-    @SerializedName("NewDeaths")
+    @SerializedName("totalNewDeaths")
     private long newDeaths;
 
     @Expose
-    @SerializedName("TotalDeaths")
+    @SerializedName("totalDeaths")
     private long totalDeaths;
 
     @Expose
@@ -30,8 +30,13 @@ public class Global implements Parcelable {
     private long newRecovered;
 
     @Expose
-    @SerializedName("TotalRecovered")
+    @SerializedName("totalRecovered")
     private long totalRecovered;
+
+    @Expose
+    @SerializedName("created")
+    private String date;
+
 
     protected Global(Parcel in) {
         newConfirmed = in.readLong();
@@ -40,6 +45,7 @@ public class Global implements Parcelable {
         totalDeaths = in.readLong();
         newRecovered = in.readLong();
         totalRecovered = in.readLong();
+        date = in.readString();
     }
 
     public static final Creator<Global> CREATOR = new Creator<Global>() {
@@ -102,6 +108,14 @@ public class Global implements Parcelable {
         this.totalRecovered = totalRecovered;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -115,5 +129,6 @@ public class Global implements Parcelable {
         dest.writeLong(totalDeaths);
         dest.writeLong(newRecovered);
         dest.writeLong(totalRecovered);
+        dest.writeString(date);
     }
 }

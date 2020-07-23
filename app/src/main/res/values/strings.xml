@@ -15,6 +15,7 @@
     <string name="nav_item_home">Home</string>
     <string name="nav_item_friends">Friends</string>
     <string name="nav_item_notifications">Messages</string>
+    <string name="content_desc_poster">poster</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">

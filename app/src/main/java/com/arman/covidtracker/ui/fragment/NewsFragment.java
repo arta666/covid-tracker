@@ -137,8 +137,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
                 News news = mAdapter.getNewsList().get(position);
                 if (news !=null){
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("news",news);
-                    bundle.putInt("position",position);
+                    bundle.putParcelable(DetailFragment.ARG_NEWS,news);
+                    bundle.putInt(DetailFragment.ARG_POSITION,position);
                     Navigation.findNavController(requireActivity(),R.id.main_container)
                             .navigate(R.id.action_newsScreen_to_detailScreen,bundle);
                 }

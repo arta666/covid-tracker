@@ -39,9 +39,9 @@ public class DetailFragment extends Fragment {
 
     private static final String TAG = DetailFragment.class.getSimpleName();
 
-    private static final String ARG_NEWS = "news";
+    public static final String ARG_NEWS = "news";
 
-    private static final String ARG_POSITION = "position";
+    public static final String ARG_POSITION = "position";
 
     private News mNews;
 
@@ -94,7 +94,6 @@ public class DetailFragment extends Fragment {
             mBinding.thumbnail.setTransitionName("thumb" + position);
         }
         mBinding.articleTitle.setText(mNews.getTitle());
-        mBinding.articleAuthor.setText(String.format("Author :%s", mNews.getAuthor()));
         mBinding.articleBody.setText(mNews.getContent());
 
         ImageLoader.load(mBinding.thumbnail, mNews.getUrlToImage());

@@ -12,4 +12,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_drawer_width">260dp</dimen>
+    <dimen name="card_height_total_world_chart">400dp</dimen>
+    <dimen name="card_height_chart_today">200dp</dimen>
 </resources>

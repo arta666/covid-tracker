@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,10 +13,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="6dp"
+        android:layout_height="@dimen/card_height_total_world_chart"
+        android:layout_margin="@dimen/margin_medium"
+        app:cardCornerRadius="@dimen/card_radius"
+        app:cardElevation="@dimen/card_elevation"
         app:layout_constraintBottom_toTopOf="@+id/cardView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,16 +28,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="World Total Statics"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:text="@string/title_world_total_statics"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/chartPie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="@dimen/margin_medium"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -47,10 +45,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="6dp"
+        android:layout_height="@dimen/card_height_chart_today"
+        android:layout_margin="@dimen/margin_medium"
+        app:cardCornerRadius="@dimen/card_radius"
+        app:cardElevation="@dimen/card_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,16 +61,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Today's World New Statics"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:text="@string/title_today_world_new_statics"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/chartLine"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="@dimen/margin_large"
+                />
 
         </LinearLayout>
 

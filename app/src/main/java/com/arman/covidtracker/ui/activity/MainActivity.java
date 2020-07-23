@@ -1,17 +1,10 @@
 package com.arman.covidtracker.ui.activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
@@ -27,15 +20,9 @@ import com.arman.covidtracker.di.module.FragmentModule;
 import com.arman.covidtracker.presenter.BasePresenter;
 import com.arman.covidtracker.repository.MainRepository;
 import com.arman.covidtracker.ui.base.BaseActivity;
-import com.arman.covidtracker.ui.fragment.FragmentDrawer;
-import com.arman.covidtracker.ui.fragment.MainFragment;
-import com.arman.covidtracker.ui.fragment.SearchFragment;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 

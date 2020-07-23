@@ -102,7 +102,6 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(TAG, "onCreate: " + (savedInstanceState == null));
     }
 
     @Override

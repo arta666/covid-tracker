@@ -1,16 +1,17 @@
 ### Covid Tracker
 
 ![alt text](./app/src/main/res/mipmap-xxxhdpi/ic_launcher.png "Logo")
+
 This app is useful for someone who interested to know about the Covid-19 Virus around the world or specific countries.
 With this, you can see the total status of the coronavirus globally or in your country and also you can read trend news
 of COVID-19 around the world.
 
 
 ## Features
-Result of world statics of coronavirus in chart view (Total, Recovered, Deaths)
-The total result of a day (new Confirmed, New Deaths)
-The total result of coronavirus filtered by country 
-Latest trend news about coronavirus around the world
+- Result of world statics of coronavirus in chart view (Total, Recovered, Deaths)
+- The total result of a day (new Confirmed, New Deaths)
+- The total result of coronavirus filtered by country 
+- Latest trend news about coronavirus around the world
 
 
 

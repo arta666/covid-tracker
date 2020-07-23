@@ -1,6 +1,7 @@
 package com.arman.covidtracker.presenter;
 
 import com.arman.covidtracker.contract.SearchContract;
+import com.arman.covidtracker.db.AppDb;
 import com.arman.covidtracker.model.Country;
 import com.arman.covidtracker.model.CountryTotal;
 import com.arman.covidtracker.model.Global;
@@ -26,7 +27,8 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    public SearchPresenter(SearchContract.View view, SearchContract.Repository repository, Scheduler mainScheduler) {
+
+    public SearchPresenter(SearchContract.View view, SearchContract.Repository repository,Scheduler mainScheduler) {
         super(view);
         this.mainScheduler = mainScheduler;
         this.repository = repository;

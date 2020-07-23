@@ -1,2 +1,3 @@
+include ':app:xnavigation'
 include ':app'
 rootProject.name = "covidtracker"

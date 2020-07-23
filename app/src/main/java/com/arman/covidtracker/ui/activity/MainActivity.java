@@ -1,6 +1,7 @@
 package com.arman.covidtracker.ui.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -37,7 +38,9 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements FragmentDrawer.FragmentDrawerListener {
+import com.arman.xnavigation.utils.NavigationExtensionsKt;
+
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -49,38 +52,62 @@ public class MainActivity extends BaseActivity implements FragmentDrawer.Fragmen
     @Inject
     FragmentManager mFragmentManager;
 
-    private FragmentDrawer drawerFragment;
+    private LiveData<NavController> currentNavController = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        ActionBar actionBar = getSupportActionBar();
-
-        setSupportActionBar(mBinding.toolbar.toolbar);
-
-        if (actionBar != null) {
-            actionBar.setDisplayShowHomeEnabled(true);
-
-        }
-        drawerFragment = (FragmentDrawer)
-                mFragmentManager.findFragmentById(R.id.fragment_navigation_drawer);
-
-
-        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mBinding.toolbar.toolbar);
-        drawerFragment.setDrawerListener(this);
+        Log.d(TAG, "onCreate: " + (savedInstanceState == null) );
 
         if (savedInstanceState == null) {
+            setUpNavigation();
 
-            displayView(0);
         }
-
-
-
     }
 
+    private void setUpNavigation() {
+        List<Integer> navGraphIds = Arrays.asList(R.navigation.home,
+                R.navigation.search);
+
+        Intent intent = this.getIntent();
+
+        LiveData<NavController> controller = NavigationExtensionsKt.setupWithNavController(mBinding.navigation,
+                navGraphIds, mFragmentManager, R.id.main_container, intent);
+
+
+        controller.observe(this, new Observer<NavController>() {
+            @Override
+            public void onChanged(NavController navController) {
+                Log.d(TAG, "onChanged: " + navController.getCurrentDestination());
+                NavigationUI.setupWithNavController(mBinding.toolbar, navController);
+
+//                NavigationUI.setupActionBarWithNavController(MainActivity.this, navController);
+            }
+        });
+
+        currentNavController = controller;
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Log.d(TAG, "onSupportNavigateUp: ");
+        LiveData<NavController> navController = this.currentNavController;
+        boolean status;
+        if (navController != null) {
+            NavController controller = (NavController) navController.getValue();
+            if (controller != null) {
+                status = controller.navigateUp();
+                Log.d(TAG, "NavigateUp Status : " + status);
+                return status;
+            }
+        }
+        status = false;
+        Log.d(TAG, "NavigateUp Status : " + status);
+        return status;
+    }
 
     @Override
     public View getContentView() {
@@ -122,38 +149,8 @@ public class MainActivity extends BaseActivity implements FragmentDrawer.Fragmen
     }
 
     @Override
-    protected void onRestoreInstanceState(@NotNull Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    @Override
-    public void onDrawerItemSelected(View view, int position) {
-        displayView(position);
-    }
-
-    private void displayView(int position) {
-        Fragment fragment = null;
-        String title = getString(R.string.app_name);
-        switch (position) {
-            case 0:
-                fragment = new MainFragment();
-                title = getString(R.string.title_home);
-                break;
-            case 1:
-                fragment = new SearchFragment();
-                title = getString(R.string.title_search);
-                break;
-            default:
-                break;
-        }
-
-        if (fragment != null) {
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_body, fragment);
-            fragmentTransaction.commit();
-
-            // set the toolbar title
-            Objects.requireNonNull(getSupportActionBar()).setTitle(title);
-        }
-    }
 }

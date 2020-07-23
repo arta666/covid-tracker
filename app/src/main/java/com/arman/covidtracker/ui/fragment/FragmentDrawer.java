@@ -3,6 +3,7 @@ package com.arman.covidtracker.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,20 +18,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arman.covidtracker.R;
+import com.arman.covidtracker.databinding.FragmentNavigationDrawerBinding;
 import com.arman.covidtracker.model.NavDrawerItem;
+import com.arman.covidtracker.presenter.BasePresenter;
 import com.arman.covidtracker.ui.adapter.NavigationDrawerAdapter;
+import com.arman.covidtracker.ui.base.BaseFragment;
+import com.arman.covidtracker.utils.RecyclerTouchListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentDrawer extends Fragment {
+public class FragmentDrawer extends BaseFragment {
 
     private static String TAG = FragmentDrawer.class.getSimpleName();
 
-    private RecyclerView recyclerView;
+    FragmentNavigationDrawerBinding mBinding;
+
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private NavigationDrawerAdapter adapter;
     private View containerView;
     private static String[] titles = null;
     private FragmentDrawerListener drawerListener;
@@ -46,14 +53,19 @@ public class FragmentDrawer extends Fragment {
     public static List<NavDrawerItem> getData() {
         List<NavDrawerItem> data = new ArrayList<>();
 
-
         // preparing navigation drawer items
-        for (int i = 0; i < titles.length; i++) {
+        for (String title : titles) {
             NavDrawerItem navItem = new NavDrawerItem();
-            navItem.setTitle(titles[i]);
+            navItem.setTitle(title);
             data.add(navItem);
         }
         return data;
+    }
+
+    @NonNull
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
     }
 
     @Override
@@ -65,16 +77,18 @@ public class FragmentDrawer extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflating view layout
-        View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+        mBinding = FragmentNavigationDrawerBinding.inflate(inflater,container, false);
 
-        adapter = new NavigationDrawerAdapter(getActivity(), getData());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+        View layout = mBinding.getRoot();
+
+        NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(getActivity(), getData());
+        mBinding.drawerList.setAdapter(adapter);
+        mBinding.drawerList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mBinding.drawerList.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),
+                mBinding.drawerList,
+                new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 drawerListener.onDrawerItemSelected(view, position);
@@ -83,7 +97,6 @@ public class FragmentDrawer extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-
             }
         }));
 
@@ -114,7 +127,7 @@ public class FragmentDrawer extends Fragment {
             }
         };
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -124,55 +137,11 @@ public class FragmentDrawer extends Fragment {
 
     }
 
-    public static interface ClickListener {
-        public void onClick(View view, int position);
-
-        public void onLongClick(View view, int position);
-    }
-
-    static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private GestureDetector gestureDetector;
-        private ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildPosition(child));
-            }
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     public interface FragmentDrawerListener {

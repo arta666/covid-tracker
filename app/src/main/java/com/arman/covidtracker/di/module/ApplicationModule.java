@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Build;
 
 import com.arman.covidtracker.app.MyApplication;
+import com.arman.covidtracker.db.AppDb;
 
 import java.util.Locale;
 
@@ -48,5 +49,7 @@ public class ApplicationModule {
 
         return locale;
     }
+
+
 
 }

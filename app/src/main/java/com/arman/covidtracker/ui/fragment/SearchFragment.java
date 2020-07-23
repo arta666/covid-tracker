@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -16,12 +18,15 @@ import android.view.ViewGroup;
 import com.arman.covidtracker.R;
 import com.arman.covidtracker.contract.SearchContract;
 import com.arman.covidtracker.databinding.FragmentSearchBinding;
+import com.arman.covidtracker.db.AppDb;
 import com.arman.covidtracker.di.component.FragmentComponent;
 import com.arman.covidtracker.model.Country;
 import com.arman.covidtracker.presenter.SearchPresenter;
+import com.arman.covidtracker.repository.CountryRepository;
 import com.arman.covidtracker.repository.SearchRepository;
 import com.arman.covidtracker.ui.adapter.CountryStatusAdapter;
 import com.arman.covidtracker.ui.base.BaseFragment;
+import com.arman.covidtracker.viewModel.CountryViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,43 +55,42 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
     @Inject
     SearchRepository repository;
 
+    @Inject
+    AppDb db;
+
     FragmentSearchBinding mBinding;
 
     CountryStatusAdapter mAdapter;
+
+    @Inject
+    public CountryRepository countryRepository;
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
     public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        return new SearchFragment();
     }
 
     @NonNull
     @Override
     protected SearchPresenter createPresenter() {
-        return new SearchPresenter(this, repository, AndroidSchedulers.mainThread());
+        return new SearchPresenter(this, repository,AndroidSchedulers.mainThread());
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        Log.d(TAG, "onCreate: " + (savedInstanceState == null));
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: " + (savedInstanceState == null));
         mBinding = FragmentSearchBinding.inflate(inflater, container, false);
-        initView();
+            initView();
         return mBinding.getRoot();
     }
 
@@ -101,8 +105,15 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.fetchResult();
+        Log.d(TAG, "onViewCreated: " + (savedInstanceState == null));
+        if (savedInstanceState == null) {
+            presenter.fetchResult();
+
+        }
+
+        setupViewModel();
     }
+
     @Override
     public void onAttach(@NotNull Context context) {
         super.onAttach(context);
@@ -125,12 +136,21 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
     }
 
 
+    private void setupViewModel() {
 
+        countryRepository.getCountriesLiveData().observe(getViewLifecycleOwner(), new Observer<List<Country>>() {
+            @Override
+            public void onChanged(@Nullable List<Country> countries) {
+                mAdapter.setCountries(countries);
+
+            }
+        });
+    }
 
     @Override
     public void onDisplayResult(List<Country> country) {
         Log.d(TAG, "onDisplayResult: " + country);
-        mAdapter.setCountries(country);
+        db.countryDao().insertAll(country);
 
     }
 
@@ -152,7 +172,7 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
         if (position == -1) {
             return;
         }
-        mAdapter.updateCountry(position,country);
+        mAdapter.updateCountry(position, country);
     }
 
     @Override
@@ -166,7 +186,7 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
     @Override
     public void hideProgress() {
         Log.d(TAG, "hideProgress: ");
-        if(mBinding.shimmerViewContainer.isShimmerStarted()){
+        if (mBinding.shimmerViewContainer.isShimmerStarted()) {
             mBinding.shimmerViewContainer.stopShimmer();
             mBinding.shimmerViewContainer.setVisibility(View.GONE);
         }

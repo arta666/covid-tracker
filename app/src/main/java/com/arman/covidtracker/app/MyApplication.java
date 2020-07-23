@@ -6,6 +6,7 @@ import com.arman.covidtracker.di.component.ApplicationComponent;
 import com.arman.covidtracker.di.component.DaggerApplicationComponent;
 import com.arman.covidtracker.di.module.ApplicationModule;
 import com.arman.covidtracker.di.module.NetModule;
+import com.arman.covidtracker.di.module.RoomModule;
 
 
 public class MyApplication extends Application {
@@ -24,6 +25,7 @@ public class MyApplication extends Application {
         component = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .netModule(new NetModule(this,Endpoints.BASE_URL))
+                .roomModule(new RoomModule(this))
                 .build();
     }
 

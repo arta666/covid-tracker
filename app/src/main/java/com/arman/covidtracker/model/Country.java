@@ -3,11 +3,19 @@ package com.arman.covidtracker.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
+@Entity(tableName = "countries")
 public class Country implements Parcelable {
 
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     @Expose
     @SerializedName("countryName")
@@ -55,6 +63,17 @@ public class Country implements Parcelable {
     private String date;
 
 
+    public Country() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getCountry() {
         return country;
     }
@@ -99,11 +118,56 @@ public class Country implements Parcelable {
         return date;
     }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public void setNewConfirmed(long newConfirmed) {
+        this.newConfirmed = newConfirmed;
+    }
+
+    public void setTotalConfirmed(long totalConfirmed) {
+        this.totalConfirmed = totalConfirmed;
+    }
+
+    public void setNewDeaths(long newDeaths) {
+        this.newDeaths = newDeaths;
+    }
+
+    public void setTotalDeaths(long totalDeaths) {
+        this.totalDeaths = totalDeaths;
+    }
+
+    public void setNewRecovered(long newRecovered) {
+        this.newRecovered = newRecovered;
+    }
+
+    public void setTotalRecovered(long totalRecovered) {
+        this.totalRecovered = totalRecovered;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public static Creator<Country> getCREATOR() {
         return CREATOR;
     }
 
     protected Country(Parcel in) {
+        id = in.readInt();
         country = in.readString();
         countryCode = in.readString();
         lat = in.readDouble();
@@ -156,6 +220,7 @@ public class Country implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(country);
         dest.writeString(countryCode);
         dest.writeDouble(lat);

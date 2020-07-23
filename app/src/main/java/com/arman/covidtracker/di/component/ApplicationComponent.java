@@ -7,6 +7,7 @@ import com.arman.covidtracker.di.module.ApplicationModule;
 import com.arman.covidtracker.di.module.NetModule;
 import com.arman.covidtracker.di.module.RoomModule;
 import com.arman.covidtracker.repository.CountryRepository;
+import com.arman.covidtracker.repository.NewsRepository;
 import com.arman.covidtracker.service.ApiService;
 
 import javax.inject.Singleton;
@@ -27,5 +28,7 @@ public interface ApplicationComponent {
     AppDb getDatabase();
 
     CountryRepository getCountryRepository();
+
+    NewsRepository getNewsRepository();
 
 }

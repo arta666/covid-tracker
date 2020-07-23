@@ -6,8 +6,12 @@ import androidx.room.Room;
 
 import com.arman.covidtracker.db.AppDb;
 import com.arman.covidtracker.db.CountryDao;
+import com.arman.covidtracker.db.NewsDao;
+import com.arman.covidtracker.model.News;
 import com.arman.covidtracker.repository.CountryDataSource;
 import com.arman.covidtracker.repository.CountryRepository;
+import com.arman.covidtracker.repository.NewsDataSource;
+import com.arman.covidtracker.repository.NewsRepository;
 
 import javax.inject.Singleton;
 
@@ -42,6 +46,19 @@ public class RoomModule {
     CountryRepository provideCountryRepository(CountryDao countryDao){
         return new CountryDataSource(countryDao);
     }
+
+    @Singleton
+    @Provides
+    NewsDao providesNewsDao(AppDb appDb){
+        return appDb.newsDao();
+    }
+
+    @Singleton
+    @Provides
+    NewsRepository provideNewsRepository(NewsDao newsDao){
+        return new NewsDataSource(newsDao);
+    }
+
 
 
 }

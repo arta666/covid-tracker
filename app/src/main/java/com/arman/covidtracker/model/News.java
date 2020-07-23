@@ -198,10 +198,10 @@ public class News implements Parcelable {
         this.status = status;
     }
 
+
     @Override
     public int describeContents() {
-
-
+        return 0;
     }
 
     @Override

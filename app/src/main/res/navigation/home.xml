@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home"
+    android:label="@string/title_home"
     app:startDestination="@id/homeScreen">
     <fragment android:id="@+id/homeScreen"
         android:name="com.arman.covidtracker.ui.fragment.MainFragment"
@@ -10,5 +11,9 @@
         tools:layout="@layout/fragment_main">
 
     </fragment>
+
+
+
+
 
 </navigation>

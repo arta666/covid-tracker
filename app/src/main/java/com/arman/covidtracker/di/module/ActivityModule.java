@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.arman.covidtracker.di.scope.PerActivity;
 import com.arman.covidtracker.repository.MainRepository;
+import com.arman.covidtracker.repository.NewsRemoteRepository;
 import com.arman.covidtracker.repository.SearchRepository;
 import com.arman.covidtracker.service.ApiService;
 import com.arman.covidtracker.ui.base.BaseActivity;
@@ -45,6 +46,12 @@ public class ActivityModule {
     @Provides
     SearchRepository provideSearchRepo(ApiService service){
         return new SearchRepository(service);
+    }
+
+    @PerActivity
+    @Provides
+    NewsRemoteRepository provideNewsRemoteRepository(ApiService service){
+        return new NewsRemoteRepository(service);
     }
 
     @Provides

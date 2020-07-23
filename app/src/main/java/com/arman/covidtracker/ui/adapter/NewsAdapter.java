@@ -1,6 +1,7 @@
 package com.arman.covidtracker.ui.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -79,7 +80,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             if (news !=null){
                 binding.vTitle.setText(news.getTitle());
                 binding.vDescription.setText(news.getDescription());
-                if (news.getUrlToImage() !=null && TextUtils.isEmpty(news.getUrlToImage())){
+                if (news.getUrlToImage() !=null && !TextUtils.isEmpty(news.getUrlToImage())){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        binding.ivPoster.setTransitionName("thumb"+getAdapterPosition());
+                    }
                     ImageLoader.load(binding.ivPoster,news.getUrlToImage());
                 }
             }

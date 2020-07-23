@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search"
+    android:label="@string/title_search"
     app:startDestination="@id/searchScreen">
     <fragment android:id="@+id/searchScreen"
         android:name="com.arman.covidtracker.ui.fragment.SearchFragment"

@@ -1,16 +1,23 @@
 package com.arman.covidtracker.presenter;
 
+import android.util.Log;
+import android.widget.SearchView;
+
 import com.arman.covidtracker.contract.SearchContract;
 import com.arman.covidtracker.db.AppDb;
 import com.arman.covidtracker.model.Country;
 import com.arman.covidtracker.model.CountryTotal;
 import com.arman.covidtracker.model.Global;
+import com.jakewharton.rxbinding2.widget.RxSearchView;
+import com.jakewharton.rxbinding2.widget.SearchViewQueryTextEvent;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Function;
 import io.reactivex.observables.ConnectableObservable;
@@ -20,6 +27,8 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class SearchPresenter extends BasePresenter<SearchContract.View> implements SearchContract.Presenter {
+
+    private static final String TAG = SearchPresenter.class.getSimpleName();
 
     private Scheduler mainScheduler;
 
@@ -35,9 +44,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
     }
 
 
-    public void unsubscribe(){
-        disposable.clear();
-    }
+
 
 
     @Override
@@ -185,5 +192,9 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
                         return country;
                     }
                 });
+    }
+
+    public void unsubscribe(){
+        disposable.clear();
     }
 }

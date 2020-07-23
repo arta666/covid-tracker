@@ -1,10 +1,12 @@
 package com.arman.covidtracker.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -12,8 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.arman.covidtracker.R;
 import com.arman.covidtracker.contract.SearchContract;
@@ -26,15 +32,25 @@ import com.arman.covidtracker.repository.CountryRepository;
 import com.arman.covidtracker.repository.SearchRepository;
 import com.arman.covidtracker.ui.adapter.CountryStatusAdapter;
 import com.arman.covidtracker.ui.base.BaseFragment;
-import com.arman.covidtracker.viewModel.CountryViewModel;
+import com.jakewharton.rxbinding2.widget.RxSearchView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.jakewharton.rxbinding2.widget.SearchViewQueryTextEvent;
+import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
+
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +81,9 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
     @Inject
     public CountryRepository countryRepository;
 
+    private CompositeDisposable disposable = new CompositeDisposable();
+    private SearchView mSearchView;
+
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -82,6 +101,7 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Log.d(TAG, "onCreate: " + (savedInstanceState == null));
     }
 
@@ -90,7 +110,9 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: " + (savedInstanceState == null));
         mBinding = FragmentSearchBinding.inflate(inflater, container, false);
+        setHasOptionsMenu(true);
             initView();
+            registerSearchView();
         return mBinding.getRoot();
     }
 
@@ -110,8 +132,8 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
             presenter.fetchResult();
 
         }
-
         setupViewModel();
+
     }
 
     @Override
@@ -147,6 +169,42 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
         });
     }
 
+    // I know it can be done with RxSearchView But I have some problem with that at this time i decided to use RxTextView
+    // Please ForGive Me :D
+    public void registerSearchView(){
+        // skipInitialValue() - skip for the first time when EditText empty
+        disposable.add(RxTextView.textChangeEvents(mBinding.inputSearch)
+                .skipInitialValue()
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(searchCountries()));
+
+    }
+
+    private DisposableObserver<TextViewTextChangeEvent> searchCountries() {
+        return new DisposableObserver<TextViewTextChangeEvent>() {
+            @Override
+            public void onNext(TextViewTextChangeEvent textChangeEvent) {
+                Log.d(TAG, "onNext: " + textChangeEvent.text());
+                onSearchResult(textChangeEvent.text());
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError: "+ e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete: ");
+            }
+        };
+    }
+
+
+
     @Override
     public void onDisplayResult(List<Country> country) {
         Log.d(TAG, "onDisplayResult: " + country);
@@ -173,6 +231,11 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
             return;
         }
         mAdapter.updateCountry(position, country);
+    }
+
+    @Override
+    public void onSearchResult(CharSequence charSequence) {
+        mAdapter.getFilter().filter(charSequence);
     }
 
     @Override

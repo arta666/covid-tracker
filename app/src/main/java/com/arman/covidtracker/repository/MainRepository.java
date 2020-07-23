@@ -4,7 +4,7 @@ import com.arman.covidtracker.contract.MainContract;
 import com.arman.covidtracker.model.Global;
 import com.arman.covidtracker.model.Summary;
 import com.arman.covidtracker.service.ApiService;
-import com.arman.covidtracker.service.NetworkService;
+
 
 import io.reactivex.Single;
 

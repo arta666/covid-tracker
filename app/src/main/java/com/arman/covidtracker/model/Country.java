@@ -4,13 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-@Entity(tableName = "countries")
+@Entity(tableName = "countries",indices = {@Index(value = {"country","countryCode"},unique = true)})
 public class Country implements Parcelable {
 
 

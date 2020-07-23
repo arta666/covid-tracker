@@ -10,6 +10,7 @@ import com.arman.covidtracker.model.News;
 
 import java.util.List;
 
+import static androidx.room.OnConflictStrategy.IGNORE;
 import static androidx.room.OnConflictStrategy.REPLACE;
 
 @Dao
@@ -26,7 +27,7 @@ public interface NewsDao {
     @Insert(onConflict = REPLACE)
     void insert(News news);
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = IGNORE)
     void insertAll(List<News> news);
 
     @Query("DELETE FROM news")

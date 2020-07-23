@@ -8,4 +8,8 @@ public class Endpoints {
     public static final String GET_COUNTRIES = "/v2/analytics/country";
 
     public static final String GET_LIVE_BY_COUNTRY= "/total/country/{countryName}";
+
+    public static final String GET_TRENDING_NEWS = "/news/trending";
+
+
 }

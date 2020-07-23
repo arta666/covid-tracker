@@ -10,4 +10,9 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/title_search" />
 
+    <item
+        android:id="@+id/news"
+        android:icon="@drawable/ic_baseline_fiber_news_24"
+        android:title="@string/title_news" />
+
 </menu>

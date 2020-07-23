@@ -5,6 +5,7 @@
     <string name="format_mongo_time">yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
+    <string name="title_news">News</string>
 
 
     <string name="action_settings">Settings</string>
@@ -16,6 +17,9 @@
     <string name="nav_item_friends">Friends</string>
     <string name="nav_item_notifications">Messages</string>
     <string name="content_desc_poster">poster</string>
+    <string name="title_detail">Detail</string>
+    <string name="action_share">Share</string>
+    <string name="content_desc_share_news">share news</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">

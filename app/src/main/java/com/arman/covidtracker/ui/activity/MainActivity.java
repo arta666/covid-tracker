@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
@@ -59,6 +60,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setSupportActionBar(mBinding.toolbar);
+
         Log.d(TAG, "onCreate: " + (savedInstanceState == null) );
 
         if (savedInstanceState == null) {
@@ -69,7 +72,7 @@ public class MainActivity extends BaseActivity {
 
     private void setUpNavigation() {
         List<Integer> navGraphIds = Arrays.asList(R.navigation.home,
-                R.navigation.search);
+                R.navigation.search,R.navigation.news);
 
         Intent intent = this.getIntent();
 
@@ -81,9 +84,10 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onChanged(NavController navController) {
                 Log.d(TAG, "onChanged: " + navController.getCurrentDestination());
-                NavigationUI.setupWithNavController(mBinding.toolbar, navController);
+//                NavigationUI.setupWithNavController(mBinding.toolbar, navController);
 
-//                NavigationUI.setupActionBarWithNavController(MainActivity.this, navController);
+
+                NavigationUI.setupActionBarWithNavController(MainActivity.this,navController);
             }
         });
 
@@ -93,20 +97,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        Log.d(TAG, "onSupportNavigateUp: ");
-        LiveData<NavController> navController = this.currentNavController;
-        boolean status;
-        if (navController != null) {
-            NavController controller = (NavController) navController.getValue();
+        if (currentNavController != null) {
+            NavController controller = (NavController) currentNavController.getValue();
             if (controller != null) {
-                status = controller.navigateUp();
-                Log.d(TAG, "NavigateUp Status : " + status);
-                return status;
+                return controller.navigateUp();
             }
         }
-        status = false;
-        Log.d(TAG, "NavigateUp Status : " + status);
-        return status;
+        return false;
     }
 
     @Override
@@ -151,6 +148,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        setUpNavigation();
     }
 
 }

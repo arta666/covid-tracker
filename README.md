@@ -12,6 +12,7 @@ of COVID-19 around the world.
 - The total result of a day (new Confirmed, New Deaths)
 - The total result of coronavirus filtered by country 
 - Latest trend news about coronavirus around the world
+- Widget for trend news
 
 
 

@@ -6,6 +6,7 @@ This app is useful for someone who interested to know about the Covid-19 Virus a
 With this, you can see the total status of the coronavirus globally or in your country and also you can read trend news
 of COVID-19 around the world.
 
+If you want to install apk version of this app you can download it from [here](./app/release/app-release.apk)
 
 ## Features
 - Result of world statics of coronavirus in chart view (Total, Recovered, Deaths)

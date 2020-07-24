@@ -7,7 +7,6 @@ import androidx.room.Room;
 import com.arman.covidtracker.db.AppDb;
 import com.arman.covidtracker.db.CountryDao;
 import com.arman.covidtracker.db.NewsDao;
-import com.arman.covidtracker.model.News;
 import com.arman.covidtracker.repository.CountryDataSource;
 import com.arman.covidtracker.repository.CountryRepository;
 import com.arman.covidtracker.repository.NewsDataSource;
@@ -18,14 +17,17 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+import static com.arman.covidtracker.app.Constants.DB_NAME;
+
 @Module
 public class RoomModule {
+
 
     private AppDb appDb;
 
     public RoomModule(Application application){
         appDb = Room.databaseBuilder(application,
-                AppDb .class, "covide-db").allowMainThreadQueries()
+                AppDb .class, DB_NAME).allowMainThreadQueries()
                 .build();
     }
 

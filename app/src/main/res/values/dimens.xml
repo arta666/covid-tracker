@@ -14,4 +14,11 @@
     <dimen name="nav_drawer_width">260dp</dimen>
     <dimen name="card_height_total_world_chart">400dp</dimen>
     <dimen name="card_height_chart_today">200dp</dimen>
+    <dimen name="mini_elevation">4dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

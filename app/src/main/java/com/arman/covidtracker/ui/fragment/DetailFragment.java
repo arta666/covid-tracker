@@ -91,7 +91,7 @@ public class DetailFragment extends Fragment {
 
         Log.d(TAG, "onViewCreated: " + position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBinding.thumbnail.setTransitionName("thumb" + position);
+            mBinding.thumbnail.setTransitionName(getString(R.string.name_thumbnail_transaction) + position);
         }
         mBinding.articleTitle.setText(mNews.getTitle());
         mBinding.articleBody.setText(mNews.getContent());

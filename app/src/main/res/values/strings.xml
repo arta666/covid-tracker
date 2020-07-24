@@ -2,7 +2,7 @@
     <string name="app_name">covidtracker</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="format_mongo_time">yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'</string>
+    <string name="format_mongo_time">yyyy-MM-dd\'T\'HH:mm:ss\'Z\'</string>
     <string name="title_global">Global</string>
     <string name="title_search">Search</string>
     <string name="title_news">News</string>
@@ -14,6 +14,25 @@
     <string name="content_desc_share_news">share news</string>
     <string name="title_world_total_statics">World Total Statics</string>
     <string name="title_today_world_new_statics">Today\'s World New Statics</string>
+    <string name="news_thumbnail">news thumbnail</string>
+    <string name="msg_readmore">ReadMore</string>
+    <string name="hint_type_country_name">Type Country Name</string>
+    <string name="title_death">Death</string>
+    <string name="title_confirmed">Confirmed</string>
+    <string name="title_recovered">Recovered</string>
+    <string name="header_content_type">Content-Type</string>
+    <string name="name_thumbnail_transaction">thumb</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="widget_title">Latest Trend News</string>
+    <string name="title_new_confirmed">New Confirmed</string>
+    <string name="title_new_deaths">New Deaths</string>
+    <string name="title_total_reovered">Total Recovered</string>
+    <string name="title_total_confirmed">Total Confirmed</string>
+    <string name="title_total_deaths">Total Deaths</string>
+    <string name="title_world_covid">Word Covid-19</string>
+    <string name="time_zone_utc">UTC</string>
+    <string name="format_default_date">yyyy/MM/dd</string>
 
 
 </resources>

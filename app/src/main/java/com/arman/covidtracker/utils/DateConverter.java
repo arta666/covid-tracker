@@ -17,7 +17,7 @@ public class DateConverter {
     public static long convertToTimesTamp(Context context,String dataSet){
 
         SimpleDateFormat format = new SimpleDateFormat(context.getString(R.string.format_mongo_time), Locale.getDefault());
-        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        format.setTimeZone(TimeZone.getTimeZone(context.getString(R.string.time_zone_utc)));
         Date date = null;
         try {
             date = format.parse(dataSet);
@@ -28,6 +28,20 @@ public class DateConverter {
         }
         assert date != null;
         return date.getTime();
+    }
+    
+
+    public static String getDefaultDate(Context context,String time){
+        SimpleDateFormat format = new SimpleDateFormat(context.getString(R.string.format_mongo_time), Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat(context.getString(R.string.format_default_date), Locale.getDefault());
+            try {
+                return outputFormat.format(format.parse(time));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
+            return "";
+  
     }
 
     public static boolean isToday(Context context,String date){

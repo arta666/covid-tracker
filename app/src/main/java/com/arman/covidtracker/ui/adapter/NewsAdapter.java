@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.arman.covidtracker.R;
 import com.arman.covidtracker.databinding.ItemCountryStatusBinding;
 import com.arman.covidtracker.databinding.ItemNewsBinding;
 import com.arman.covidtracker.model.Country;
@@ -82,7 +83,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 binding.vDescription.setText(news.getDescription());
                 if (news.getUrlToImage() !=null && !TextUtils.isEmpty(news.getUrlToImage())){
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        binding.ivPoster.setTransitionName("thumb"+getAdapterPosition());
+                        binding.ivPoster.setTransitionName(context.getString(R.string.name_thumbnail_transaction)+getAdapterPosition());
                     }
                     ImageLoader.load(binding.ivPoster,news.getUrlToImage());
                 }

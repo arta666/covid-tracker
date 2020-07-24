@@ -2,6 +2,7 @@ package com.arman.covidtracker.di.module;
 
 import android.text.TextUtils;
 
+import com.arman.covidtracker.R;
 import com.arman.covidtracker.app.Endpoints;
 import com.arman.covidtracker.app.MyApplication;
 import com.arman.covidtracker.service.ApiService;
@@ -78,7 +79,7 @@ public class NetModule {
                         Request request = chain.request();
                         Request.Builder requestBuilder = request.newBuilder();
                         requestBuilder
-                                .addHeader("Content-Type", "application/json")
+                                .addHeader(application.getString(R.string.header_content_type), "application/json")
                                 .build();
                         return chain.proceed(request);
                     }

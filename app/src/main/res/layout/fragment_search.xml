@@ -14,14 +14,14 @@
         android:background="@drawable/search_text_background"
         android:drawableStart="@drawable/ic_baseline_search_24"
         android:drawablePadding="@dimen/margin_small"
-        android:hint="Type Country Name"
+        android:hint="@string/hint_type_country_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
         android:maxLines="1"
         android:maxLength="20"
         android:imeOptions="actionSearch"
         android:inputType="textVisiblePassword"
-        android:elevation="6dp"
+        android:elevation="@dimen/card_elevation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_search"
         android:layout_marginTop="@dimen/margin_medium"
-        android:elevation="4dp">
+        android:elevation="@dimen/mini_elevation">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container"

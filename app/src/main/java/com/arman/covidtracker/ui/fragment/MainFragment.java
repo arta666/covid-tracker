@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
@@ -21,7 +20,6 @@ import com.arman.covidtracker.contract.MainContract;
 import com.arman.covidtracker.databinding.FragmentMainBinding;
 import com.arman.covidtracker.di.component.FragmentComponent;
 import com.arman.covidtracker.model.Global;
-import com.arman.covidtracker.model.Summary;
 import com.arman.covidtracker.presenter.MainPresenter;
 import com.arman.covidtracker.repository.MainRepository;
 import com.arman.covidtracker.ui.base.BaseFragment;
@@ -41,27 +39,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MainFragment extends BaseFragment<MainPresenter> implements MainContract.View {
 
     private static final String TAG = MainFragment.class.getSimpleName();
 
     FragmentMainBinding mBinding;
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     @Inject
     MainRepository repository;
@@ -73,23 +59,6 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MainFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MainFragment newInstance(String param1, String param2) {
-        MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @NonNull
     @Override
@@ -100,10 +69,6 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
     }
 
@@ -167,10 +132,10 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
         deathSet.add(deathEntry);
 
 
-        BarDataSet confirmedDataSet = new BarDataSet(confirmedSet, "New Confirmed");
+        BarDataSet confirmedDataSet = new BarDataSet(confirmedSet, getString(R.string.title_new_confirmed));
         confirmedDataSet.setColor(ContextCompat.getColor(getContext(), R.color.chart_yellow));
 
-        BarDataSet deathsDataSet = new BarDataSet(deathSet, "New Deaths");
+        BarDataSet deathsDataSet = new BarDataSet(deathSet, getString(R.string.title_new_deaths));
         deathsDataSet.setColor(ContextCompat.getColor(getContext(), R.color.chart_red));
 
         ArrayList<IBarDataSet> barDataSets = new ArrayList<>();
@@ -213,10 +178,10 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
 
     private void createPieChartOfTotal(Global global) {
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry((float) global.getTotalRecovered(), "Total Recovered"));
-        entries.add(new PieEntry((float) global.getTotalConfirmed(), "Total Confirmed"));
-        entries.add(new PieEntry((float) global.getTotalDeaths(), "Total Deaths"));
-        PieDataSet dataSet = new PieDataSet(entries, "Word Covid-19");
+        entries.add(new PieEntry((float) global.getTotalRecovered(), getString(R.string.title_total_reovered)));
+        entries.add(new PieEntry((float) global.getTotalConfirmed(), getString(R.string.title_total_confirmed)));
+        entries.add(new PieEntry((float) global.getTotalDeaths(), getString(R.string.title_total_deaths)));
+        PieDataSet dataSet = new PieDataSet(entries, getString(R.string.title_world_covid));
         dataSet.setDrawIcons(false);
         dataSet.setSliceSpace(3f);
         dataSet.setIconsOffset(new MPPointF(0, 40));

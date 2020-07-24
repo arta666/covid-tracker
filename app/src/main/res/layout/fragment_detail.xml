@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:fitsSystemWindows="true"
-                    />
+                    android:contentDescription="@string/news_thumbnail" />
 
                 <View
                     android:layout_width="match_parent"

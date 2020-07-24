@@ -1,6 +1,7 @@
 package com.arman.covidtracker.app;
 
 import android.app.Application;
+import android.app.Service;
 
 import com.arman.covidtracker.di.component.ApplicationComponent;
 import com.arman.covidtracker.di.component.DaggerApplicationComponent;
@@ -8,13 +9,20 @@ import com.arman.covidtracker.di.module.ApplicationModule;
 import com.arman.covidtracker.di.module.NetModule;
 import com.arman.covidtracker.di.module.RoomModule;
 
+import javax.inject.Inject;
 
-public class MyApplication extends Application {
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasAndroidInjector;
+
+
+public class MyApplication extends Application  {
 
 
     private ApplicationComponent component;
 
     private static MyApplication mInstance =null;
+
 
 
     @Override
@@ -36,4 +44,6 @@ public class MyApplication extends Application {
     public ApplicationComponent getComponent(){
         return component;
     }
+
+
 }

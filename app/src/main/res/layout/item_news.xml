@@ -70,7 +70,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/ivArrow"
-            android:text="ReadMore"
+            android:text="@string/msg_readmore"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintBottom_toBottomOf="@+id/ivArrow"
@@ -93,7 +93,8 @@
             android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/vDescription"
+            android:contentDescription="@string/news_thumbnail" />
 
 
 

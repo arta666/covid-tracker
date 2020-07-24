@@ -51,22 +51,10 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SearchFragment extends BaseFragment<SearchPresenter> implements SearchContract.View {
 
     private static final String TAG = SearchFragment.class.getSimpleName();
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     @Inject
     SearchRepository repository;
@@ -82,15 +70,11 @@ public class SearchFragment extends BaseFragment<SearchPresenter> implements Sea
     public CountryRepository countryRepository;
 
     private CompositeDisposable disposable = new CompositeDisposable();
-    private SearchView mSearchView;
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    public static SearchFragment newInstance(String param1, String param2) {
-        return new SearchFragment();
-    }
 
     @NonNull
     @Override
